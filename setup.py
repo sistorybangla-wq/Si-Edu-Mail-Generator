@@ -6,20 +6,25 @@ from __dwnldDrivers.versions import *
 ######## use it on your own RISK ########
 ######## I'm not responsible for any loss or damage ########
 ######## caused to you using this script ########
+######## Updated for September 2026 ########
 ######## Github Repo - https://git.io/JJisT/ ########
 
 def install(name):
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', name])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', name])
 
 def main():
 
-    my_packages = ['requests', 'clint', 'faker', 'selenium', 'colorama', 'undetected-chromedriver', 'selenium-wire']
+    my_packages = ['requests', 'clint', 'faker', 'selenium', 'colorama', 'undetected-chromedriver', 'selenium-wire', 'python-dotenv']
 
     installed_pr = [] 
     
+    print(fc + sd + '[' + fm + sb + '*' + fc + sd + '] ' + fy + 'Installing Python Packages (2026 Version)...')
     for package in my_packages:
-        install(package)
-        print('\n')
+        try:
+            install(package)
+            print('\n')
+        except Exception as e:
+            print(f'Error installing {package}: {e}')
 
     print('Firefox')
     firefox_ver = get_firefox_version()
@@ -47,26 +52,30 @@ def main():
         print('Error - Setup installation failed \nReason - Please install either Chrome or Firefox browser to complete setup process')
         exit()
 
-    print('\nWich browser do you prefer to run script on')
+    print('\nWhich browser do you prefer to run script on')
 
     for index, pr in enumerate(installed_pr, start=1):
-        print('\n[*] ' + str(index) + ' ' + pr)
+        print('\n[*] ' + str(index) + ' - ' + pr)
     
     inpErr = True
 
     while inpErr != False:
         print('\nEnter id ex - 1 or 2: ', end='')
-        userInput = int(input())
+        try:
+            userInput = int(input())
 
-        if userInput <= len(installed_pr) and userInput > 0:
-            selected = installed_pr[userInput - 1]
-            selectedx = selected.split(' ')[0]
-            fp = open('prefBrowser.txt', 'w')
-            fp.write(selectedx.lower())
-            inpErr = False
-        else:
-             print('Wrong id, Either input 1 or 2')
+            if userInput <= len(installed_pr) and userInput > 0:
+                selected = installed_pr[userInput - 1]
+                selectedx = selected.split(' ')[0]
+                fp = open('prefBrowser.txt', 'w')
+                fp.write(selectedx.lower())
+                fp.close()
+                inpErr = False
+            else:
+                 print('Wrong id, Either input 1 or 2')
+        except ValueError:
+            print('Please enter a valid number')
 
-    print('Setup Completed')
+    print('\n' + fc + sd + '[' + fm + sb + '*' + fc + sd + '] ' + fg + 'Setup Completed Successfully (2026 Version)')
 if __name__ == '__main__':
     main()
